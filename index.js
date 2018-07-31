@@ -1,4 +1,4 @@
-
+// Declaracion de express
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
@@ -10,56 +10,57 @@ const APP_TOKEN = 'EAAeeE7QKZC5sBAABpO37GnifQg0E2ykC88x0M1PllK7tlCKyOLKamTd3z5jS
 var app = express();
 app.use(bodyParser.json());
 
+//puerto de salia
 app.listen(3000, function(){
 console.log("el servidor esta en el puerto 3000");
 });
 
 app.get('/', function(req, res){
-res.send('Bienvenido al taller');
+// res.send('Bienvenido al taller');
 });
 
-app.get('/webhook', function(req, res){
+  //webhook configuracion test_token_desarrollomx es el token
+  app.get('/webhook', function(req, res){
+    if(req.query['hub.verify_token'] === 'test_token_desarrollomx'){
+      res.send(req.query['hub.challenge']);
+    }else{
+      res.send('tu no tienes acceso');
+    }
+  });
 
-  if(req.query['hub.verify_token'] === 'test_token_desarrollomx'){
-    res.send(req.query['hub.challenge']);
-  }else{
-    res.send('tu no tienes acceso');
-  }
-});
-
-app.post('/webhook', function(req,res){
-
-  var data = req.body;
-  // console.log(data);
-  if(data.object == 'page'){
-    data.entry.forEach(function(pageEntry){
-      pageEntry.messaging.forEach(function(messagingEvent){
-      //recibiendo mensaje
-
-      if(messagingEvent.message){
-        receiveMessage(messagingEvent);
-      }
-
+  app.post('/webhook', function(req,res){
+    var data = req.body;
+    // console.log(data);
+    if(data.object == 'page'){
+      data.entry.forEach(function(pageEntry){
+        pageEntry.messaging.forEach(function(messagingEvent){
+        //recibiendo mensaje
+        if(messagingEvent.message){
+          receiveMessage(messagingEvent);
+        }
+        });
       });
-    });
-    res.sendStatus(200);
-  }
-});
+      res.sendStatus(200);
+    }
+  });
 
 //recibiendo mensaje
 function receiveMessage(event){
 // console.log(event);
 var senderID = event.sender.id;
 var messageText = event.message.text;
-
 evaluateMessage(senderID, messageText);
 }
 
+//detectando mensaje de usuario
 function evaluateMessage(recipientId, message){
   var finalMessage = '';
 //Saludo Facebook
   if(isContain(message, 'ayuda')){
     finalMessage = 'En que puedo ayudarte';
+  }
+  else if(isContain(message, 'Concepthaus') || isContain(message, 'concepthaus')){
+    finalMessage = 'a tu servicio';
   }
   else{
     // finalMessage = 'Te estoy arremedando, escribiste esto: ' +'""'+ message + '""' +' ¿o me equivoco?';
@@ -68,6 +69,7 @@ function evaluateMessage(recipientId, message){
   sendMessageText(recipientId, finalMessage);
 }
 
+//enviando respuestas json text
 function sendMessageText(recipientId, message){
   var messageData = {
     recipient : {
@@ -80,7 +82,7 @@ function sendMessageText(recipientId, message){
   callSendAPI(messageData);
 }
 
-//envio de mensaje por medio de API facebook
+//envio de mensaje por medio de API facebook la uri es estatica (es el link de la API)
 function callSendAPI(messageData){
 request({
   "uri": "https://graph.facebook.com/v2.6/me/messages",
@@ -95,7 +97,6 @@ request({
   }
 });
 }
-
 
 function isContain(sentence, word){
   return sentence.indexOf(word) > -1;
