@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAATTzAEHyX4BAEZBGffZCkVwz6HwzmlZAuzBnnvGIEi2PZAUMbQcRyoZBRwZAlzzIUXdO6nXScF6Vb4xqd5MOgFpwTjXIO8tfQhNhA2ElTLPbeIXsbQD34cdoEGcePeYyBTxK9Mh5h1Ub0nwytHDVi2ZATSGuBeH1bet9DlzggzjwZDZD';
+const APP_TOKEN = 'EAAeeE7QKZC5sBAABpO37GnifQg0E2ykC88x0M1PllK7tlCKyOLKamTd3z5jSQHaT6PqRXCCEtT2ZAy9gQTT0HIjj5FMZC39ZBYIxzSx9c6nrYd9FCB7Psp9XMX9x6NkQaykPJclWZATZAqcCtnvrZC6kmplGdMNvu9t9DE6LIhJJAZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -62,7 +62,8 @@ function evaluateMessage(recipientId, message){
     finalMessage = 'En que puedo ayudarte';
   }
   else{
-    finalMessage = 'Te estoy arremedando, escribiste esto: ' + message;
+    // finalMessage = 'Te estoy arremedando, escribiste esto: ' +'""'+ message + '""' +' ¿o me equivoco?';
+        finalMessage = 'Hola somos Concepthaus, en que podemos ayudarte?';
   }
   sendMessageText(recipientId, finalMessage);
 }
