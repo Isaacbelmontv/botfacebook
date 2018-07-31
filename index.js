@@ -52,7 +52,7 @@ var messageText = event.message.text;
 evaluateMessage(senderID, messageText);
 }
 
-//detectando mensaje de usuario
+//detectando mensaje de usuario texto
 function evaluateMessage(recipientId, message){
   var finalMessage = '';
 //Saludo Facebook
