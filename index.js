@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAAeeE7QKZC5sBAABpO37GnifQg0E2ykC88x0M1PllK7tlCKyOLKamTd3z5jSQHaT6PqRXCCEtT2ZAy9gQTT0HIjj5FMZC39ZBYIxzSx9c6nrYd9FCB7Psp9XMX9x6NkQaykPJclWZATZAqcCtnvrZC6kmplGdMNvu9t9DE6LIhJJAZDZD';
+const APP_TOKEN = 'EAAJ31KKP2WUBALTxF2BhpFbBReNAjJ3ezKTZCohCW5pOcU5wZC2ZAWpOJsEewXFupmGqNfJbn6wnL0yTQPrspmrH3UjCZBy3DqcjlZAyZBGIPLLZALoFdwZAswnzXmd958ahCLyURLoa5tbunzbyPf8NqtGBKUovOOWZAh0VzjZAr6QQZDZD';
 
 var app = express();
 app.use(bodyParser.json());

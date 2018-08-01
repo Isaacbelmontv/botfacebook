@@ -28,10 +28,13 @@
 
 1. el token que utilizaremos es test_token_desarrollomx este se encuentra en la configuración del webhook dentro del archivo index.js
 
-1. por ultimo seleccionamos la opción de messages y Verificamos y guardamos nuestros cambios.
+1. Seleccionamos la opción de messages y Verificamos y guardamos nuestros cambios.
 
   <img src="documentacionDocs/paso_6.png" width="750">
 
+1. Por ultimo seleccionamos la pagina donde se implementara el webhook.
+
+    <img src="documentacionDocs/paso_7.png" width="750">
 ### Configuración dentro de index.js
 
 implementacion de token en index.js *EJEMPLO*
