@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAAJ31KKP2WUBALTxF2BhpFbBReNAjJ3ezKTZCohCW5pOcU5wZC2ZAWpOJsEewXFupmGqNfJbn6wnL0yTQPrspmrH3UjCZBy3DqcjlZAyZBGIPLLZALoFdwZAswnzXmd958ahCLyURLoa5tbunzbyPf8NqtGBKUovOOWZAh0VzjZAr6QQZDZD';
+const APP_TOKEN = 'EAAipmtqCjBIBANgeZA3d8yAVLGUtn1QiWJhrMj0RBufKjxElgNQTyrqiJ9RtldgwFKMzpso61xu4ZCWaC9oSP7gjrGDgyA0a1Tdqj9B7pDLjO4AtmyDw77BBNbLdmDHGZAWk7r1kqvtKVEBqlZBMHwHrCeKeyBpTya4CH71pwQZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -54,13 +54,30 @@ evaluateMessage(senderID, messageText);
 
 //detectando mensaje de usuario texto
 function evaluateMessage(recipientId, message){
-  var finalMessage = '';
+  let finalMessage = '';
 //Saludo Facebook
+
+//seccion nueva
+
+//seccion nueva
+
   if(isContain(message, 'ayuda')){
     finalMessage = 'En que puedo ayudarte';
   }
   else if(isContain(message, 'Concepthaus') || isContain(message, 'concepthaus')){
     finalMessage = 'a tu servicio';
+  }
+  // opcion servicios
+  else if(isContain(message, 'Servicios') || isContain(message, 'servicios')){
+    finalMessage = 'Branding, Diseño, 3D, Marketing Digital, SEO, Marketing ATL, Marketing BTL, Evento, Relaciones Públicas, Responsabilidad Social, Interiorismo, Producción Audiovisual, Fotografía, Varios';
+  }
+  // opcion horario de Contacto
+  else if(isContain(message, 'Horario de contacto') || isContain(message, 'horario de contacto')){
+    finalMessage = 'El horario es de Lunes a Viernes de 9:00 a.m. - 6:00 p.m.';
+  }
+  // opcion  Contacto
+  else if(isContain(message, 'Contacto') || isContain(message, 'contacto')){
+    finalMessage = 'Ingresa tus datos';
   }
   else{
     // finalMessage = 'Te estoy arremedando, escribiste esto: ' +'""'+ message + '""' +' ¿o me equivoco?';
@@ -101,3 +118,16 @@ request({
 function isContain(sentence, word){
   return sentence.indexOf(word) > -1;
 }
+
+
+//datos de contacto
+/*
+Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
+
+Servicios/////////
+Branding
+Diseño
+Markering Digital
+SEO
+Desarrollo web
+*/

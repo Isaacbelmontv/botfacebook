@@ -89,6 +89,20 @@ npm install express body-parser --save
     node index.js
     ```
 
+### Configuración de facebook
+
+1. Ir a tu pagina y seleccionar el botón de Configuración
+1. Habilitar el mensajé de bienvenida
+1. Habilitar los botones dentro del chat
+
+<img src="documentacionDocs/paso_8.png" width="750">
+
+<img src="documentacionDocs/paso_9.png" width="750">
+
+<img src="documentacionDocs/paso_10.png" width="750">
+
+<img src="documentacionDocs/paso_11.png" width="750">
+
 :camel: [link documentación MarkDown!](https://guides.github.com/features/mastering-markdown/) :camel:
 
  <p align="center">
