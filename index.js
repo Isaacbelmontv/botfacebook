@@ -124,10 +124,6 @@ function isContain(sentence, word){
 /*
 Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
 
-Servicios/////////
-Branding
-Diseño
-Markering Digital
-SEO
-Desarrollo web
+link
+https://codigofacilito.com/videos/6-responder-mensajes
 */
