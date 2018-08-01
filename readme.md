@@ -3,34 +3,54 @@
 ## BOT facebook :bomb:
 
 ### Pasos
-* Crear pagina en facebook.com
-* Crear cuenta en developers.facebook.com ó iniciar sesion con la cuenta que tiene permiso de administrador de la pagina.
-* Crear aplicacion en la consola de facebookdevelopers
-* Añadir Messenger a los productos.
+* Crear pagina en [facebook](facebook.com)
+* Crear cuenta en [devfacebook](developers.facebook.com) ó iniciar sesion con la cuenta que tiene permiso de administrador de la pagina.
 
-### Configuración de Messenger
-* Generar el token del sitio, seleccionando la pagina en la cual se implementara el bot, y copiando ese token utilizarlo en node.
+### Facebook developers console
+1. Seleccionar la opción Agregar una aplicación nueva
+<img src="documentacionDocs/paso_1.png" width="750">
 
-```
-EAAeeE7QKZC5sBAABpO37GnifQg0E2ykC88x0M1PllK7tlCKyOLKamTd3z5jSQHaT6PqRXCCEtT2ZAy9gQTT0HIjj5FMZC39ZBYIxzSx9c6nrYd9FCB7Psp9XMX9x6NkQaykPJclWZATZAqcCtnvrZC6kmplGdMNvu9t9DE6LIhJJAZDZD
-```
+1. Ingresar el nombre del proyecto y seleccionar Crear identificador de la aplicación.
+<img src="documentacionDocs/paso_2.png" width="750">
 
-implementarlo en index.js
+1. Seleccionar configuración en Messenger
+<img src="documentacionDocs/paso_3.png" width="750">
 
-```
-const APP_TOKEN ='EAAeeE7QKZC5sBAABpO37GnifQg0E2ykC88x0M1PllK7tlCKyOLKamTd3z5jSQHaT6PqRXCCEtT2ZAy9gQTT0HIjj5FMZC39ZBYIxzSx9c6nrYd9FCB7Psp9XMX9x6NkQaykPJclWZATZAqcCtnvrZC6kmplGdMNvu9t9DE6LIhJJAZDZD'
-```
+1. Ir a la seccion Generación de token y seleccionar el sitio donde implementaremos el bot, copiar el token y utilizarlo en const APP_TOKEN dentro de index.js
+<img src="documentacionDocs/paso_4.png" width="750">
 
 ### Configuración de el webhook
 
-* Seleccionar Configurar webhook
+1. Ir a la seccion Webhooks y seleccionar el botón configurar webhooks
+<img src="documentacionDocs/paso_5.png" width="750">
 
-* La url local es https://b37dc1a6.ngrok.io/webhook
-* El token del webhook es test_token_desarrollomx
-* Activar la opción de messages
-* Seleccionar Verificar y Guardar
+1. Agregar la url de direccion la cual es el link del servidor /webhook en este caso utilizamos el link que generamos de manera local.
 
-* Dentro de webhook seleccionar la pagina de facebook donde funcionara el bot y dar click en suscribir
+1. el token que utilizaremos es test_token_desarrollomx este se encuentra en la configuración del webhook dentro del archivo index.js
+
+1. por ultimo seleccionamos la opción de messages y Verificamos y guardamos nuestros cambios.
+
+  <img src="documentacionDocs/paso_6.png" width="750">
+
+### Configuración dentro de index.js
+
+implementacion de token en index.js *EJEMPLO*
+
+```
+const APP_TOKEN ='EAAJ31KKP2WUBALTxF2BhpFbBReNAjJ3ezKTZCohCW5pOcU5wZC2ZAWpOJsEewXFupmGqNfJbn6wnL0yTQPrspmrH3UjCZBy3DqcjlZAyZBGIPLLZALoFdwZAswnzXmd958ahCLyURLoa5tbunzbyPf8NqtGBKUovOOWZAh0VzjZAr6QQZDZD'
+```
+
+weebhook configuración el test_token_desarrollomx es el token que envia facebook para identificar nuestro servidor
+```
+app.get('/webhook', function(req, res){
+  if(req.query['hub.verify_token'] === 'test_token_desarrollomx'){
+    res.send(req.query['hub.challenge']);
+  }else{
+    res.send('tu no tienes acceso');
+  }
+});
+```
+
 
 ### Requerimientos del bot
 * Compatibilidad con HTTPS
@@ -55,7 +75,7 @@ npm install express body-parser --save
 ### Ejecucion del bot de manera local
 * Comandos desde la terminal dentro del proyecto
 
-  * el https link que genera, es el que utilizamos de url del webhook y no puede pararse ese comando o generara otro link.
+  * el https link que genera, es el que utilizamos de url del webhook y no puede pararse ese comando o generara otro link *(3000 es el puerto asignada en index.js).*
   ```
   ngrok http 3000
   ```
