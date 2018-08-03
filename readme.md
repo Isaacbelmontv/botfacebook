@@ -1,6 +1,40 @@
 <p align="center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0INUbJ5FOyXCFsx7q5Qbx6ysOPDaXXwDV13mB67BVfEoVWy4Y" width="150"></p>
 
-## BOT facebook :bomb:
+## Project name: BOT facebook :bomb:
+
+### Instalación y Requerimientos
+* Compatibilidad con HTTPS
+* Un certificado SSL válido
+* Un puerto abierto que acepte solicitudes GET y POST
+
+* Instalacion de Node.js
+```
+npm init   
+```
+
+* Instalacion de Express
+```
+npm install express body-parser --save  
+```
+
+* Instalacion de Ngrok (manera local)
+[link descarga](https://ngrok.com/download/)
+  * Descargar y ejecutar
+
+
+### Ejecucion del bot de manera local
+  * Comandos desde la terminal dentro del proyecto
+
+    * el https link que genera, es el que utilizamos de url del webhook y no puede pararse ese comando o generara otro link *(3000 es el puerto asignada en index.js).*
+    ```
+    ngrok http 3000
+    ```
+
+    * Ejecutar el archivo de node desde la terminal dentro del proyecto, este archivo es el que se editara y para que los cambios puedan guardarse se debe reinicar este comando.
+
+      ```
+      node index.js
+      ```
 
 ### Pasos
 * Crear pagina en [facebook](facebook.com)
@@ -54,41 +88,6 @@ app.get('/webhook', function(req, res){
 });
 ```
 
-
-### Requerimientos del bot
-* Compatibilidad con HTTPS
-* Un certificado SSL válido
-* Un puerto abierto que acepte solicitudes GET y POST
-
-* Instalacion de Node.js
-```
-npm init   
-```
-
-* Instalacion de Express
-```
-npm install express body-parser --save  
-```
-
-* Instalacion de Ngrok (manera local)
-[link descarga](https://ngrok.com/download/)
-  * Descargar y ejecutar
-
-
-### Ejecucion del bot de manera local
-* Comandos desde la terminal dentro del proyecto
-
-  * el https link que genera, es el que utilizamos de url del webhook y no puede pararse ese comando o generara otro link *(3000 es el puerto asignada en index.js).*
-  ```
-  ngrok http 3000
-  ```
-
-  * Ejecutar el archivo de node desde la terminal dentro del proyecto, este archivo es el que se editara y para que los cambios puedan guardarse se debe reinicar este comando.
-
-    ```
-    node index.js
-    ```
-
 ### Configuración de facebook
 
 1. Ir a tu pagina y seleccionar el botón de Configuración
@@ -104,6 +103,7 @@ npm install express body-parser --save
 <img src="documentacionDocs/paso_11.png" width="750">
 
 :camel: [link documentación MarkDown!](https://guides.github.com/features/mastering-markdown/) :camel:
+
 
  <p align="center">
    <img src="https://media.giphy.com/media/sNjTRqN38JDXy/giphy.gif" width="300">

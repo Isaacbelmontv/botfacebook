@@ -162,8 +162,8 @@ function sendMessageTemplate(recipientId){
 
 function elementTemplate(){
   return{
-    title: "Isaac Belmont",
-    subtitle: "Desarrollador de software",
+    title: "Concepthaus",
+    subtitle: "Agencia de publicidad",
     //link imagen
     item_url: "https://concepthaus.mx/",
     image_url: "https://ii.ct-stc.com/2/logos/empresas/2016/10/19/3b543f9ff79f4ec2869athumbnail.png",
@@ -210,3 +210,4 @@ function isContain(sentence, word){
 }
 //datos de contacto
 //Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
+//Documentacion https://guides.github.com/features/wikis/
