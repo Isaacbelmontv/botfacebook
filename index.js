@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAADz2RRJEOABAAfbZCrtYBA1ZB2NizR2NZBHl6o5g8iRoiCtZBgW5QEq5EZBBTKTkBPNL4q0wAwGTxC39Jim9bT8CZCZC7px1zztkmo5w5SaKlHhC62DtivNtOgAlIkPSwM21HlOFZCZBhOPxtMfTKL3lJi7sAZB3oOcNyflG06tY7owZDZD';
+const APP_TOKEN = 'EAADTe65upXMBANAkZBVbOdmvfRgTLSKk0lSi8DBreSCI3uG7LEAZAffJ1wd5eKc3vx6t0uxo6MzLkiGPn8P9LRe3RZCClWLoLw7iaqvXxsQt9QL7wcmk3iWYVWscfVJphVnpcObs6fpbTXz59rpPPfQZBzWwQ6bb9KqDZCONkfQZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -85,8 +85,8 @@ function evaluateMessage(recipientId, message){
 
 //====================Envio de mensaje: desde API====================//
   else if(isContain(message, 'Api') || isContain(message, 'api')){
-    getWeather(function (apiConnection) {
-      message = "Api id: " + apiConnection;
+    getWeather(function (nameApi, longitudApi, latitudApi) {
+      message = "Localización: " + nameApi + "\nlongitud: " + longitudApi + "\nlatitudApi: " + latitudApi;
       sendMessageText(recipientId, message);
     });
   }
@@ -135,8 +135,14 @@ function getWeather(callback){
   , function(error, response, data){
     if(!error){
       var response = JSON.parse(data);
-      var apiConnection = response.totalResultsCount;
-      callback(apiConnection);
+      //name
+      var nameApi = response.geonames[0].name;
+      //longitud
+      var longitudApi = response.geonames[0].lng;
+      //latitudApi
+      var latitudApi = response.geonames[0].lat;
+      // console.log(response);
+      callback(nameApi, longitudApi, latitudApi);
     }
   });
 }
@@ -167,7 +173,7 @@ function elementTemplate(){
     //link imagen
     item_url: "https://concepthaus.mx/",
     image_url: "https://ii.ct-stc.com/2/logos/empresas/2016/10/19/3b543f9ff79f4ec2869athumbnail.png",
-    buttons: [ buttonsTemplate(), buttonsTemplatedos() ],
+    buttons: [ buttonsTemplate(), buttonsTemplatetres(), buttonsTemplatecuatro()],
   }
 }
 
@@ -188,6 +194,24 @@ function buttonsTemplatedos(){
   }
 }
 
+//link mensaje prueba
+function buttonsTemplatetres(){
+  return{
+    type: "postback",
+    title: "mensaje prueba",
+    payload: "mensaje prueba",
+  }
+}
+
+
+//link llamada
+function buttonsTemplatecuatro(){
+  return{
+    type: "phone_number",
+    title: "llamar",
+    payload: "018001232222",
+  }
+}
 //====================Conexión Messages====================//
 function callSendAPI(messageData){
 request({
@@ -208,6 +232,10 @@ request({
 function isContain(sentence, word){
   return sentence.indexOf(word) > -1;
 }
+
+
+//pruebas
+
 //datos de contacto
 //Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
 //Documentacion https://guides.github.com/features/wikis/
