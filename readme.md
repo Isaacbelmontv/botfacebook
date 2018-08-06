@@ -95,3 +95,8 @@ app.get('/webhook', function(req, res){
  <p align="center">
    <img src="https://media.giphy.com/media/sNjTRqN38JDXy/giphy.gif" width="300">
  </p>
+
+
+ https://developers.facebook.com/docs/messenger-platform/send-messages/template/button
+
+ https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies/#email

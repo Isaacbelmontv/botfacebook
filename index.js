@@ -59,7 +59,7 @@ evaluateMessage(senderID, messageText);
 function evaluateMessage(recipientId, message){
   let finalMessage = '';
   //====================Envio de mensaje: ayuda====================//
-  if(isContain(message, 'ayuda')){
+   if(isContain(message, 'ayuda')){
     finalMessage = 'En que puedo ayudarte';
   }
 //====================Envio de mensaje: Opción servicios====================//
@@ -215,7 +215,7 @@ function buttonsTemplatecuatro(){
 //====================Conexión Messages====================//
 function callSendAPI(messageData){
 request({
-  "uri": "https://graph.facebook.com/v2.6/me/messages",
+  "uri": "https://graph.facebook.com/v2.6/me/messages?access_token=<APP_TOKEN>",
   "qs": { "access_token": APP_TOKEN },
   "method": "POST",
   "json": messageData
@@ -226,6 +226,30 @@ request({
     console.log('el mensaje fue enviado');
   }
 });
+}
+
+//====================Respuestas Messages====================//
+function sendMessagePrueba(recipientId){
+  var messageData = {
+    recipient : {
+      id : recipientId
+    },
+    message: {
+        text: "Here is a quick reply!",
+        quick_replies:[
+      {
+        type:"text",
+        title:"Search",
+        payload:"<POSTBACK_PAYLOAD>",
+        image_url:"http://example.com/img/red.png"
+      },
+      {
+        "content_type":"location"
+      }
+    ]
+    }
+  };
+  callSendAPI(messageData);
 }
 
 
