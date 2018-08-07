@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAADTe65upXMBANAkZBVbOdmvfRgTLSKk0lSi8DBreSCI3uG7LEAZAffJ1wd5eKc3vx6t0uxo6MzLkiGPn8P9LRe3RZCClWLoLw7iaqvXxsQt9QL7wcmk3iWYVWscfVJphVnpcObs6fpbTXz59rpPPfQZBzWwQ6bb9KqDZCONkfQZDZD';
+const APP_TOKEN = 'EAADQ3UU7r68BADw3AM512pixpOmbPAc0qmrK9pNiDlbt2g8PnjCx6FqqK4D0laN2K5BTrA0C1493zs6VKFxFKsTDeH6swJg4mLzBpuS23TjpGHU1RInVvhhMY08pq14iZCh2afva8g3J9Oh3eKHvXZBiLrFWMHIMOFZAhk4wQZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -70,10 +70,6 @@ function evaluateMessage(recipientId, message){
   else if(isContain(message, 'Horario de contacto') || isContain(message, 'horario de contacto')){
     finalMessage = 'El horario es de Lunes a Viernes de 9:00 a.m. - 6:00 p.m.';
   }
-//====================Envio de mensaje: Opción contacto====================//
-  else if(isContain(message, 'Contacto') || isContain(message, 'contacto')){
-    finalMessage = 'Ingresa tus datos';
-  }
 //====================Envio de mensaje: Imagen====================//
   else if(isContain(message, 'Concepthaus') || isContain(message, 'concepthaus')){
     sendMessageImage(recipientId);
@@ -82,6 +78,16 @@ function evaluateMessage(recipientId, message){
   else if(isContain(message, 'Info') || isContain(message, 'info')){
     sendMessageTemplate(recipientId);
   }
+//====================Envio de mensaje: Prueba====================//
+  else if(isContain(message, 'Prueba') || isContain(message, 'prueba')){
+    sendMessageTemplateButton(recipientId);
+  }
+
+//====================Envio de mensaje: Buttons====================//
+  else if(isContain(message, 'Contacto') || isContain(message, 'contacto')){
+    sendMessageFormulario(recipientId);
+  }
+
 
 //====================Envio de mensaje: desde API====================//
   else if(isContain(message, 'Api') || isContain(message, 'api')){
@@ -93,7 +99,7 @@ function evaluateMessage(recipientId, message){
 //====================Envio de mensaje: default====================//
   else{
     // finalMessage = 'Te estoy arremedando, escribiste esto: ' +'""'+ message + '""' +' ¿o me equivoco?';
-        finalMessage = 'Hola somos Concepthaus, en que podemos ayudarte?';
+        sendMessageDefault(recipientId);
   }
   sendMessageText(recipientId, finalMessage);
 }
@@ -219,7 +225,8 @@ request({
   "qs": { "access_token": APP_TOKEN },
   "method": "POST",
   "json": messageData
-}, function(error, response, data){
+  },
+function(error, response, data){
   if(error){
     console.log('No es posible enviar el mensaje');
   }else{
@@ -228,29 +235,96 @@ request({
 });
 }
 
-//====================Respuestas Messages====================//
-function sendMessagePrueba(recipientId){
+//====================Respuestas====================//
+function sendMessageTemplateButton(recipientId){
   var messageData = {
     recipient : {
       id : recipientId
     },
     message: {
-        text: "Here is a quick reply!",
-        quick_replies:[
+      attachment: {
+        type: "template",
+        payload : {
+          template_type: "button",
+          text: "Pregunta?",
+          buttons:[
+            {
+              type: "postback",
+              title: "Respuesta uno",
+              payload: "Respuesta uno",
+            },
+            {
+              type: "postback",
+              title: "Respuesta dos",
+              payload: "Respuesta dos",
+            }
+          ]
+        }
+      }
+    }
+  };
+  callSendAPI(messageData);
+}
+
+//====================Respuestas Buttons====================//
+
+
+function sendMessageFormulario(recipientId){
+  var messageData = {
+    recipient : {
+      id : recipientId
+    },
+    message: {
+      text: "Selecciona la opción por la cual deseas que te contactemos?",
+      quick_replies:[
       {
-        type:"text",
-        title:"Search",
-        payload:"<POSTBACK_PAYLOAD>",
-        image_url:"http://example.com/img/red.png"
+        content_type:"location"
       },
       {
-        "content_type":"location"
+        "content_type":"user_phone_number"
+      },
+      {
+        "content_type":"user_email"
       }
     ]
     }
   };
   callSendAPI(messageData);
 }
+
+//====================Respuesta default====================//
+
+
+function sendMessageDefault(recipientId){
+  var messageData = {
+    recipient : {
+      id : recipientId
+    },
+    message: {
+      text: "Hola somos Concepthaus, en que podemos ayudarte?",
+      quick_replies:[
+      {
+        content_type: "text",
+        title: "Servicios",
+        payload: "Servicios"
+      },
+      {
+        content_type: "text",
+        title: "Horario de contacto",
+        payload: "Horario de contacto"
+      },
+      {
+        content_type: "text",
+        title: "Contacto",
+        payload: "Contacto"
+      }
+    ]
+    }
+  };
+  callSendAPI(messageData);
+}
+
+
 
 
 function isContain(sentence, word){
