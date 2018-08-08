@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAADQ3UU7r68BADw3AM512pixpOmbPAc0qmrK9pNiDlbt2g8PnjCx6FqqK4D0laN2K5BTrA0C1493zs6VKFxFKsTDeH6swJg4mLzBpuS23TjpGHU1RInVvhhMY08pq14iZCh2afva8g3J9Oh3eKHvXZBiLrFWMHIMOFZAhk4wQZDZD';
+const APP_TOKEN = 'EAADro8kHqVUBAGkLY6P4AdeM0oPMxmILlKhQANU7t9TuqiYamyVLTs5OLpwvZAicAMz7PD7BCu6FB5tPIAbGRqYKhZBb7HH9fZBhhFTYz1YoPJPmdfs7cDDvUSq5eX0qsGL09kbOhLQv5fSTcmr1ZAV1JmhnG5q3jtv7ZCbi6ZBQZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -51,6 +51,7 @@ function receiveMessage(event){
 var senderID = event.sender.id;
 var messageText = event.message.text;
 evaluateMessage(senderID, messageText);
+// console.log(senderID);
 }
 
 //====================Termina configuración BOT====================//
@@ -58,6 +59,7 @@ evaluateMessage(senderID, messageText);
 //detectando mensaje de usuario texto
 function evaluateMessage(recipientId, message){
   let finalMessage = '';
+  // sendTypingOn(sender);
   //====================Envio de mensaje: ayuda====================//
    if(isContain(message, 'ayuda')){
     finalMessage = 'En que puedo ayudarte';
@@ -75,18 +77,21 @@ function evaluateMessage(recipientId, message){
     sendMessageImage(recipientId);
   }
 //====================Envio de mensaje: Template(Buttons)====================//
-  else if(isContain(message, 'Info') || isContain(message, 'info')){
+  else if(isContain(message, 'Empresas') || isContain(message, 'empresas')){
     sendMessageTemplate(recipientId);
   }
 //====================Envio de mensaje: Prueba====================//
   else if(isContain(message, 'Prueba') || isContain(message, 'prueba')){
     sendMessageTemplateButton(recipientId);
   }
-
 //====================Envio de mensaje: Buttons====================//
   else if(isContain(message, 'Contacto') || isContain(message, 'contacto')){
     sendMessageFormulario(recipientId);
   }
+  //====================Envio de mensaje: Salir====================//
+    else if(isContain(message, 'Salir') || isContain(message, 'salir')){
+      finalMessage = '¡Hasta pronto! espero haber sido de ayuda.';
+    }
 
 
 //====================Envio de mensaje: desde API====================//
@@ -153,75 +158,10 @@ function getWeather(callback){
   });
 }
 
-//====================Templates Messages====================//
-function sendMessageTemplate(recipientId){
-  var messageData = {
-    recipient : {
-      id : recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload : {
-          template_type: "generic",
-          elements: [ elementTemplate() ]
-        }
-      }
-    }
-  };
-  callSendAPI(messageData);
-}
-
-function elementTemplate(){
-  return{
-    title: "Concepthaus",
-    subtitle: "Agencia de publicidad",
-    //link imagen
-    item_url: "https://concepthaus.mx/",
-    image_url: "https://ii.ct-stc.com/2/logos/empresas/2016/10/19/3b543f9ff79f4ec2869athumbnail.png",
-    buttons: [ buttonsTemplate(), buttonsTemplatetres(), buttonsTemplatecuatro()],
-  }
-}
-
-//link button
-function buttonsTemplate(){
-  return{
-    type: "web_url",
-    url: "https://concepthaus.mx/",
-    title: "Sitio",
-  }
-}
-//link buttondos
-function buttonsTemplatedos(){
-  return{
-    type: "web_url",
-    url: "https://www.facebook.com/Desarrollomx-239946563293365/?modal=admin_todo_tour",
-    title: "Facebook",
-  }
-}
-
-//link mensaje prueba
-function buttonsTemplatetres(){
-  return{
-    type: "postback",
-    title: "mensaje prueba",
-    payload: "mensaje prueba",
-  }
-}
-
-
-//link llamada
-function buttonsTemplatecuatro(){
-  return{
-    type: "phone_number",
-    title: "llamar",
-    payload: "018001232222",
-  }
-}
 //====================Conexión Messages====================//
 function callSendAPI(messageData){
 request({
-  "uri": "https://graph.facebook.com/v2.6/me/messages?access_token=<APP_TOKEN>",
+  "uri": "https://graph.facebook.com/v2.6/me/messages?access_token=<PAGE_ACCESS_TOKEN>",
   "qs": { "access_token": APP_TOKEN },
   "method": "POST",
   "json": messageData
@@ -316,7 +256,15 @@ function sendMessageDefault(recipientId){
       {
         content_type: "text",
         title: "Contacto",
-        payload: "Contacto"
+        payload: "contacto"
+      },{
+        content_type: "text",
+        title: "Empresas",
+        payload: "empresas"
+      },{
+        content_type: "text",
+        title: "Salir",
+        payload: "salir"
       }
     ]
     }
@@ -324,16 +272,125 @@ function sendMessageDefault(recipientId){
   callSendAPI(messageData);
 }
 
+//====================Templates Messages====================//
+function sendMessageTemplate(recipientId){
+  var messageData = {
+    recipient : {
+      id : recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload : {
+          template_type: "generic",
+          elements: [ elementTemplateConcept(), elementTemplateTree(), elementTemplateInhaus() ]
+        }
+      }
+    }
+  };
+  callSendAPI(messageData);
+}
+
+function elementTemplateConcept(){
+  return{
+    title: "Concepthaus",
+    subtitle: "Agencia de publicidad",
+    //link imagen
+    item_url: "https://concepthaus.mx/",
+    image_url: "https://concepthaus.mx/img/home-elements/doors/concepthaus.png",
+    buttons: [ buttonConcept(), buttonLlamar()],
+  }
+}
+
+function elementTemplateTree(){
+  return{
+    title: "Treehaus",
+    subtitle: "(Green Marketing)",
+    //link imagen
+    item_url: "https://concepthaus.mx/treehaus",
+    image_url: "https://concepthaus.mx/img/home-elements/doors/treehaus.png",
+    buttons: [ buttonTreehaus(), buttonLlamar()],
+  }
+}
+
+function elementTemplateInhaus(){
+  return{
+    title: "Inhaus",
+    subtitle: "Casa Productora",
+    //link imagen
+    item_url: "https://concepthaus.mx/inhaus",
+    image_url: "https://concepthaus.mx/img/home-elements/doors/inhaus.png",
+    buttons: [ buttoninHaus(), buttonLlamar()],
+  }
+}
+
+//link button
+function buttonConcept(){
+  return{
+    type: "web_url",
+    url: "https://concepthaus.mx/",
+    title: "Sitio",
+  }
+}
+
+function buttonTreehaus(){
+  return{
+    type: "web_url",
+    url: "https://concepthaus.mx/treehaus",
+    title: "Sitio",
+  }
+}
+
+function buttoninHaus(){
+  return{
+    type: "web_url",
+    url: "https://concepthaus.mx/inhaus",
+    title: "Sitio",
+  }
+}
 
 
+//link mensaje prueba
+// function buttonContacto(){
+//   return{
+//     type: "postback",
+//     title: "Contacto",
+//     payload: "payload"
+//   }
+// }
+
+
+//link llamada
+function buttonLlamar(){
+  return{
+    type: "phone_number",
+    title: "llamar",
+    payload: "018001232222",
+  }
+}
+
+//Templates pruebas
+
+
+
+
+
+
+// const sendTypingOn = (recipientId) => {
+//   var messageData = {
+//     recipient: {
+//       id: recipientId
+//     },
+//     sender_action: "typing_on"
+//   };
+//   callSendAPI(messageData);
+// }
 
 function isContain(sentence, word){
   return sentence.indexOf(word) > -1;
 }
 
-
 //pruebas
-
 //datos de contacto
 //Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
 //Documentacion https://guides.github.com/features/wikis/

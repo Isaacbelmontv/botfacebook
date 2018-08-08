@@ -97,6 +97,10 @@ app.get('/webhook', function(req, res){
  </p>
 
 
- https://developers.facebook.com/docs/messenger-platform/send-messages/template/button
+ https://github.com/Raniazy/messenger-bot-tutorial
 
- https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies/#email
+ https://developers.facebook.com/docs/messenger-platform/useful-resources
+
+ https://developers.facebook.com/docs/messenger-platform/app-review
+
+ https://github.com/Schmavery/facebook-chat-api
