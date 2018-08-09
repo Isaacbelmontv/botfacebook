@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAADro8kHqVUBAGkLY6P4AdeM0oPMxmILlKhQANU7t9TuqiYamyVLTs5OLpwvZAicAMz7PD7BCu6FB5tPIAbGRqYKhZBb7HH9fZBhhFTYz1YoPJPmdfs7cDDvUSq5eX0qsGL09kbOhLQv5fSTcmr1ZAV1JmhnG5q3jtv7ZCbi6ZBQZDZD';
+const APP_TOKEN = 'EAADoy1zvzfkBADeyXaCoDbE6UAf0bKHKSj8bfKK8ZAt2sZBHAeAXPWpVka4cPNVzrTJxq3W9vsgJk42wnTMdVveoZCL1bjYl4mrgZC3fXRy8Tz4zRBu1NIGOEX0GtouYOK4EiiBqpXxQF6TrZBSjfdbd27aC15ZCZCJvsZADDVdYyAZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -88,11 +88,15 @@ function evaluateMessage(recipientId, message){
   else if(isContain(message, 'Contacto') || isContain(message, 'contacto')){
     sendMessageFormulario(recipientId);
   }
+  //====================Envio de mensaje: Respuesta de contacto====================//
+    else if(isContain(message, '@') || isContain(message, '+') || isContain(message, '.com')){
+      finalMessage = 'Nos pondremos en contacto contigo.';
+    }
+
   //====================Envio de mensaje: Salir====================//
     else if(isContain(message, 'Salir') || isContain(message, 'salir')){
       finalMessage = '¡Hasta pronto! espero haber sido de ayuda.';
     }
-
 
 //====================Envio de mensaje: desde API====================//
   else if(isContain(message, 'Api') || isContain(message, 'api')){
@@ -101,6 +105,13 @@ function evaluateMessage(recipientId, message){
       sendMessageText(recipientId, message);
     });
   }
+
+//==========================Pruebas================================//
+else if(isContain(message, 'Gg') || isContain(message, 'gg')){
+    sendMessageWeb(recipientId);
+}
+
+
 //====================Envio de mensaje: default====================//
   else{
     // finalMessage = 'Te estoy arremedando, escribiste esto: ' +'""'+ message + '""' +' ¿o me equivoco?';
@@ -161,7 +172,7 @@ function getWeather(callback){
 //====================Conexión Messages====================//
 function callSendAPI(messageData){
 request({
-  "uri": "https://graph.facebook.com/v2.6/me/messages?access_token=<PAGE_ACCESS_TOKEN>",
+  "uri": "https://graph.facebook.com/v2.6/me/messages?access_token=<APP_TOKEN>",
   "qs": { "access_token": APP_TOKEN },
   "method": "POST",
   "json": messageData
@@ -285,7 +296,14 @@ function sendMessageTemplate(recipientId){
           template_type: "generic",
           elements: [ elementTemplateConcept(), elementTemplateTree(), elementTemplateInhaus() ]
         }
-      }
+      },
+      quick_replies:[
+        {
+          content_type: "text",
+          title: "Contacto",
+          payload: "contacto"
+        }
+    ]
     }
   };
   callSendAPI(messageData);
@@ -349,17 +367,6 @@ function buttoninHaus(){
   }
 }
 
-
-//link mensaje prueba
-// function buttonContacto(){
-//   return{
-//     type: "postback",
-//     title: "Contacto",
-//     payload: "payload"
-//   }
-// }
-
-
 //link llamada
 function buttonLlamar(){
   return{
@@ -369,22 +376,44 @@ function buttonLlamar(){
   }
 }
 
-//Templates pruebas
+//webview
+    function sendMessageWeb(recipientId){
+      var messageData = {
+        recipient : {
+          id : recipientId
+        },
+        message: {
+          attachment: {
+            type: "template",
+            payload : {
+              template_type: "button",
+              text: "Pregunta?",
+              buttons:[
+                {
+                  type: "postback",
+                  title: "Respuesta uno",
+                  payload: "Respuesta uno",
+                },
+                {
+                  type: "web_url",
+                  title: "URL Button",
+                  url:"https://www.messenger.com/",
+                  webview_height_ratio: "compact",
+                  messenger_extensions: false
+                }
+              ]
+            }
+          }
+        }
+      };
+      callSendAPI(messageData);
+    }
 
 
 
 
 
 
-// const sendTypingOn = (recipientId) => {
-//   var messageData = {
-//     recipient: {
-//       id: recipientId
-//     },
-//     sender_action: "typing_on"
-//   };
-//   callSendAPI(messageData);
-// }
 
 function isContain(sentence, word){
   return sentence.indexOf(word) > -1;
@@ -394,3 +423,4 @@ function isContain(sentence, word){
 //datos de contacto
 //Nombre, Correo, Telefono, Servicios, Empresa, Mensajes
 //Documentacion https://guides.github.com/features/wikis/
+//https://concepthaus.mx/#contact

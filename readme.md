@@ -104,3 +104,10 @@ app.get('/webhook', function(req, res){
  https://developers.facebook.com/docs/messenger-platform/app-review
 
  https://github.com/Schmavery/facebook-chat-api
+
+
+Web view
+https://blog.messengerdevelopers.com/using-the-webview-to-create-richer-bot-to-user-interactions-ed8a789523c6
+https://github.com/fbsamples/messenger-platform-samples/tree/master/webview
+
+https://stackoverflow.com/questions/42627440/how-to-get-name-timezone-gender-of-your-bot-user-in-messenger-1-4-api
