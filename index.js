@@ -5,7 +5,7 @@ var request = require('request');
 
 
 //Token de generación de token de messenger aplication en facebookdevelopers
-const APP_TOKEN = 'EAADoy1zvzfkBADeyXaCoDbE6UAf0bKHKSj8bfKK8ZAt2sZBHAeAXPWpVka4cPNVzrTJxq3W9vsgJk42wnTMdVveoZCL1bjYl4mrgZC3fXRy8Tz4zRBu1NIGOEX0GtouYOK4EiiBqpXxQF6TrZBSjfdbd27aC15ZCZCJvsZADDVdYyAZDZD';
+const APP_TOKEN = 'EAAez0e87JEoBAPk7HrDxG9oeAY8tDOyaziZCkr1pCJZBZCoivskPCKvznTqQZBcJH5F5DvbiKYXH5Md4P2u9DzfLedUfZCxXFhzaq5ZBPlGtfgjsSJMNhfBrQuM35oZCfyh7guiFaHwOuXa0WlzYakLGkRTUXcC3QaIkCCC0iIFZBAZDZD';
 
 var app = express();
 app.use(bodyParser.json());
@@ -66,6 +66,7 @@ function evaluateMessage(recipientId, message){
   }
 //====================Envio de mensaje: Opción servicios====================//
   else if(isContain(message, 'Servicios') || isContain(message, 'servicios')){
+    // console.log(`Echoed back to ${profile.first_name}`);
     finalMessage = 'Branding, Diseño, 3D, Marketing Digital, SEO, Marketing ATL, Marketing BTL, Evento, Relaciones Públicas, Responsabilidad Social, Interiorismo, Producción Audiovisual, Fotografía, Varios';
   }
 //====================Envio de mensaje: Opción horario de contacto====================//

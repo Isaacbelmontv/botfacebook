@@ -111,3 +111,6 @@ https://blog.messengerdevelopers.com/using-the-webview-to-create-richer-bot-to-u
 https://github.com/fbsamples/messenger-platform-samples/tree/master/webview
 
 https://stackoverflow.com/questions/42627440/how-to-get-name-timezone-gender-of-your-bot-user-in-messenger-1-4-api
+
+
+https://developers.facebook.com/docs/messenger-platform/app-review/
